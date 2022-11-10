@@ -7,7 +7,6 @@ import type {Coordinates} from "../game/Game";
 /**
  * https://www.redblobgames.com/grids/hexagons/#coordinates
  */
-
 export class Bestagon implements Tickable {
     private hasPlayer: boolean;
     private inCombat: boolean;

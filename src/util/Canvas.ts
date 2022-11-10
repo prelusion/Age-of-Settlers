@@ -4,7 +4,7 @@ export class Canvas {
     constructor() {
         this.ctx = getCanvasIfSupported();
         this.setCanvasColor(200, 0, 0);
-        this.draw();
+        // this.draw();
     }
 
     getCtx() {
@@ -16,10 +16,12 @@ export class Canvas {
 
     }
 
-    draw() {
+    draw(x: number, y: number, size: number = 3) {
     //    Todo draw something on canvas.
-        this.ctx.fillRect(this.ctx.canvas.width / 2, this.ctx.canvas.height / 2, 50, 50);
+        this.ctx.fillRect(x, y, size, size);
+        // this.ctx.fillRect(this.ctx.canvas.width / 2, this.ctx.canvas.height / 2, 50, 50);
     }
+
 }
 
 function getCanvasIfSupported(): CanvasRenderingContext2D {

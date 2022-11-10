@@ -28,6 +28,10 @@ export class Game {
     }
 
     generateBestagon(coords: Coordinates = {x: 0, y: 0, z: 0}) {
+       if(!this.validCoordinates(coords)) {
+            return;
+       }
+
         if(this.coordinatesTaken(coords)) {
             console.log("TAKEN!")
             return;
@@ -57,6 +61,9 @@ export class Game {
         return this.occupiedBestagons
     }
 
+    validCoordinates(coords: Coordinates): boolean {
+        return coords.x + coords.y + coords.z === 0;
+    }
 
     blacklistBestagon(coords: Coordinates) {
         this.occupiedBestagons.add(JSON.stringify(coords));

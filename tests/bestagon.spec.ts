@@ -2,7 +2,6 @@ import {assert} from "chai";
 import {Game} from "../src/game/Game";
 
 describe("Game", function () {
-
     describe("Bestagons", function () {
         let game: Game;
 
