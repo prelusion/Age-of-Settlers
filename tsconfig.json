@@ -1,8 +1,10 @@
 {
   "include": ["src", "types"],
   "compilerOptions": {
-    "module": "esnext",
-    "target": "esnext",
+    "module": "commonjs",
+    "target": "es6",
+//        "module": "esnext",
+//        "target": "esnext",
     "moduleResolution": "node",
     "jsx": "preserve",
     "baseUrl": "./",
