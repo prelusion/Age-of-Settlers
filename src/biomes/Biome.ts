@@ -71,4 +71,3 @@ export class Biome implements IBiome, Tickable {
         return biomes[this.type].collectables[type].gatherModifier;
     }
 }
-

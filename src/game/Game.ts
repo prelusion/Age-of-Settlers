@@ -1,52 +1,46 @@
 import {Bestagon} from "../bestagon/Bestagon";
 import {GameHelper} from "./GameHelper";
+import {Hex} from "../Layout/Hex";
 
 export interface BestagonData {
     bestagon: Bestagon,
 }
 
-export interface Coordinates {
-    x: number;
-    y: number;
-    z: number;
-}
-
 export class Game {
     private map: BestagonData[];
+
     /**
-     * This set is a JSON.stringified Coordinates object. This is done to simply use the
+     * This set is a Coordinates object. This is done to simply use the
      * Set features to check chosen bestagon locations if they're allowed to contain a new bestagon.
      */
-    private availableBestagons: Set<string>;
-    private occupiedBestagons: Set<string>;
+    private readonly availableBestagons: Set<string>;
+    private readonly occupiedBestagons: Set<string>;
 
     constructor() {
         this.map = [];
-        this.availableBestagons = new Set([JSON.stringify({x: 0, y: 0, z: 0})]);
-        this.occupiedBestagons = new Set([JSON.stringify({x: 0, y: 0, z: 0})]);
-        this.generateBestagon();
+
+        let initial = Hex.Zero();
+
+        this.availableBestagons = new Set([initial.toString()]);
+        this.occupiedBestagons = new Set([initial.toString()]);
+
+        this.generateBestagon(initial);
     }
 
-    generateBestagon(coords: Coordinates = {x: 0, y: 0, z: 0}) {
-       if(!this.validCoordinates(coords)) {
-            return;
-       }
-
-        if(this.coordinatesTaken(coords)) {
-            console.log("TAKEN!")
+    generateBestagon(hex: Hex) {
+        if(this.coordinatesTaken(hex)) {
             return;
         }
 
-        if(!this.bestagonConnected(coords)) {
-            console.log("NOT CONNECTED!")
+        if(!this.bestagonConnected(hex)) {
             return;
         }
 
         this.map.push({
-            bestagon: new Bestagon(coords),
+            bestagon: new Bestagon(hex),
         });
-        this.blacklistBestagon(coords);
-        this.whitelistBestagons(coords);
+        this.blacklistBestagon(hex);
+        this.whitelistBestagons(hex);
     }
 
     get bestagonCount() {
@@ -61,33 +55,30 @@ export class Game {
         return this.occupiedBestagons
     }
 
-    validCoordinates(coords: Coordinates): boolean {
-        return coords.x + coords.y + coords.z === 0;
+    validCoordinates(hex: Hex): boolean {
+        return hex.q + hex.s + hex.r === 0;
     }
 
-    blacklistBestagon(coords: Coordinates) {
-        this.occupiedBestagons.add(JSON.stringify(coords));
-        this.availableBestagons.delete(JSON.stringify(coords));
+    blacklistBestagon(hex: Hex) {
+        this.occupiedBestagons.add(hex.toString());
+        this.availableBestagons.delete(hex.toString());
     }
 
-    coordinatesTaken(coords: Coordinates): boolean {
-        return this.map.some(b => JSON.stringify(b.bestagon.coords) === JSON.stringify(coords));
+    coordinatesTaken(hex: Hex): boolean {
+        return this.map.some(b => b.bestagon.coords.equals(hex));
     }
 
-    whitelistBestagons(coords: Coordinates) {
-        let adjacentCoordinates = GameHelper.giveAdjacentBestagonCoordinates(coords);
-        for (let cObj of adjacentCoordinates) {
-            let cStr = JSON.stringify(cObj);
-            if(!this.occupiedBestagons.has(cStr)) {
-                this.availableBestagons.add(cStr);
+    whitelistBestagons(hex: Hex) {
+        let adjacentHexes = GameHelper.giveAdjacentBestagonCoordinates(hex);
+        for (let adjacentHex of adjacentHexes) {
+            let hexStr = adjacentHex.toString();
+            if(!this.occupiedBestagons.has(hexStr)) {
+                this.availableBestagons.add(hexStr);
             }
         }
     }
 
-    bestagonConnected(coords: Coordinates): boolean {
-        if(!this.availableBestagons.has(JSON.stringify(coords))) {
-            return false;
-        }
-        return true;
+    bestagonConnected(hex: Hex): boolean {
+        return this.availableBestagons.has(hex.toString());
     }
 }

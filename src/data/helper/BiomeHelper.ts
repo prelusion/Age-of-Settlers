@@ -4,7 +4,6 @@ import {Random} from "../../util/Random";
 import type {CollectableType} from "../../resources/ResourceType";
 import type {BiomeType} from "../../biomes/BiomeType";
 import {Obj} from "../../util/TypeHint";
-import {Biome} from "../../biomes/Biome";
 
 export class BiomeHelper {
     public static shouldCollSpawn(coll: BiomeDataCollectables): boolean {

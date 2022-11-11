@@ -3,7 +3,7 @@ import {BiomeType} from "../src/biomes/BiomeType";
 import {assert} from "chai";
 import {CollectableType} from "../src/resources/ResourceType";
 import {BiomeHelper} from "../src/data/helper/BiomeHelper";
-import biomes, {BiomeDataCollectables} from "../src/data/biomes";
+import biomes from "../src/data/biomes";
 
 describe("Biome", function () {
 
@@ -27,9 +27,9 @@ describe("Biome", function () {
             let collectedTypes = new Set();
 
             let a = 0;
-            for(let type in collectableTypes) {
+            for (let type in collectableTypes) {
                 for (let i = 100; BiomeHelper.getSpawnChanceOfType(biome.type, type) * 99 < i; i--) {
-                    if(BiomeHelper.shouldCollSpawn(biomes[biome.type].collectables[type])) {
+                    if (BiomeHelper.shouldCollSpawn(biomes[biome.type].collectables[type])) {
                         collectedTypes.add(CollectableType[collectableTypes[type]]);
                     }
                 }

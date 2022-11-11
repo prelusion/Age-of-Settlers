@@ -1,23 +1,28 @@
-import type {Coordinates, Game} from "./Game";
+import type {Game} from "./Game";
+import {Hex} from "../Layout/Hex";
 
 export class GameHelper {
+    // @formatter:off
     static generateTinyGrid(game: Game) {
-        game.generateBestagon({x: 0, y: -1, z: 1});
-        game.generateBestagon({x: 0, y: 1, z: -1});
-        game.generateBestagon({x: -1, y: 0, z: 1});
-        game.generateBestagon({x: 1, y: 0, z: -1});
-        game.generateBestagon({x: -1, y: 1, z: 0});
-        game.generateBestagon({x: 1, y: -1, z: 0});
+        game.generateBestagon(new Hex(0,  -1,  1));
+        game.generateBestagon(new Hex(0,   1, -1));
+        game.generateBestagon(new Hex(-1,  0,  1));
+        game.generateBestagon(new Hex(1,   0, -1));
+        game.generateBestagon(new Hex(-1,  1,  0));
+        game.generateBestagon(new Hex(1,  -1,  0));
     }
+    // @formatter:on
 
-    static giveAdjacentBestagonCoordinates(c: {x: number, y: number, z: number}): Coordinates[] {
-        let adjacentCoordinates: Coordinates[] = [];
-        adjacentCoordinates.push({x: c.x,      y: c.y - 1,  z: c.z + 1});
-        adjacentCoordinates.push({x: c.x,      y: c.y + 1,  z: c.z - 1});
-        adjacentCoordinates.push({x: c.x - 1,  y: c.y,      z: c.z + 1});
-        adjacentCoordinates.push({x: c.x + 1,  y: c.y,      z: c.z - 1});
-        adjacentCoordinates.push({x: c.x - 1,  y: c.y + 1,  z: c.z    });
-        adjacentCoordinates.push({x: c.x + 1,  y: c.y - 1,  z: c.z    });
+    // @formatter:off
+    static giveAdjacentBestagonCoordinates(c: Hex): Hex[] {
+        let adjacentCoordinates: Hex[] = [];
+        adjacentCoordinates.push(new Hex(c.q,      c.s - 1,  c.r + 1));
+        adjacentCoordinates.push(new Hex(c.q,      c.s + 1,  c.r - 1));
+        adjacentCoordinates.push(new Hex(c.q - 1,  c.s,      c.r + 1));
+        adjacentCoordinates.push(new Hex(c.q + 1,  c.s,      c.r - 1));
+        adjacentCoordinates.push(new Hex(c.q - 1,  c.s + 1,  c.r    ));
+        adjacentCoordinates.push(new Hex(c.q + 1,  c.s - 1,  c.r    ));
         return adjacentCoordinates;
     }
+    // @formatter:on
 }

@@ -13,7 +13,6 @@ export class Canvas {
 
     setCanvasColor(r: number, g: number, b: number) {
         this.ctx.fillStyle = "rgb("+r+","+g+","+b+")";
-
     }
 
     draw(x: number, y: number, size: number = 3) {
