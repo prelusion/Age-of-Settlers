@@ -14,13 +14,16 @@ export const LAYOUT_FLAT = new Orientation(
 );
 
 export class Layout {
-    public readonly orientation;
-    public readonly size: Point;
-    public readonly origin: Point;
+    public static orientation: Orientation;
+    public static size: Point;
+    public static origin: Point;
 
-    constructor(orientation: Orientation, size: Point, origin: Point) {
-        this.orientation = orientation;
-        this.size = size;
-        this.origin = origin;
+    private constructor() {
+    }
+
+    static setLayout(orientation: Orientation, size: Point, origin: Point) {
+        Layout.orientation = orientation;
+        Layout.size = size;
+        Layout.origin = origin;
     }
 }

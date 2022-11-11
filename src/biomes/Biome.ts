@@ -1,11 +1,11 @@
 import type {CollectableFields, CollectableNumberFields, IBiome} from "./IBiome";
-import type {BiomeType} from "./BiomeType";
-import type {CollectableType} from "../resources/ResourceType";
+import type {CollectableType} from "../data/types/ResourceType";
 import type {Tickable} from "../game/Tickable";
 import {Obj} from "../util/TypeHint";
 import collectables from "../data/collectables";
 import {BiomeHelper} from "../data/helper/BiomeHelper";
 import biomes, {BiomeData} from "../data/biomes";
+import type {BiomeType} from "../data/types/BiomeType";
 
 export class Biome implements IBiome, Tickable {
     collectables: CollectableFields;

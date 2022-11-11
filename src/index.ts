@@ -1,13 +1,18 @@
 import {Canvas} from "./util/Canvas";
+import {World} from "./game/World";
 import {Game} from "./game/Game";
-import {GameHelper} from "./game/GameHelper";
-import {Layout, LAYOUT_FLAT, LAYOUT_POINTY} from "./Layout/Layout";
-import {LayoutHelper} from "./Layout/LayoutHelper";
-import {Hex} from "./Layout/Hex";
-import {Point} from "./Layout/Point";
+import {Layout, LAYOUT_FLAT, LAYOUT_POINTY} from "./layout/Layout";
+import {Point} from "./layout/Point";
+import {ImageFactory} from "./util/ImageFactory";
+import {ProceduralType} from "./data/types/ProceduralType";
 
-const canvas = new Canvas();
-const game = new Game();
+const imageFactory = new ImageFactory();
+const canvas = new Canvas("canvas");
+const map_random = new Canvas("map_random");
+const map_small_biome = new Canvas("map_small_biome");
+const map_big_biome = new Canvas("map_big_biome");
+const map_single_biome = new Canvas("map_single_biome");
+// const game = new World();
 
 main();
 
@@ -16,34 +21,50 @@ function main() {
         alert("This browser does not support the game!");
         return;
     }
-    GameHelper.generateTinyGrid(game);
 
-    let layout = new Layout(LAYOUT_POINTY, new Point(50, 50), new Point(300, 300));
+    Layout.setLayout(LAYOUT_POINTY, new Point(50, 50), new Point(1000, 1000));
+    canvas.setCanvasColor(200, 0, 100);
 
-    canvas.setCanvasColor(100, 0, 200);
-    for (let corner of LayoutHelper.polygonCorners(layout, new Hex(0, 0, 0))) {
-        canvas.draw(corner.x, corner.y);
+    /** canvas */
+    let world = Game.generateProceduralWorld(ProceduralType.BIG_BIOME);
+
+    for (let hexagon of world.allOccupiedHexagons) {
+        canvas.drawHex(hexagon, world.getBiomeFromHex(hexagon));
     }
-    for (let corner of LayoutHelper.polygonCorners(layout, new Hex(0, -1, 1))) {
-        canvas.draw(corner.x, corner.y);
+
+
+
+    /** map_random */
+    world = Game.generateProceduralWorld(ProceduralType.RANDOM);
+
+    for (let hexagon of world.allOccupiedHexagons) {
+        map_random.drawHex(hexagon, world.getBiomeFromHex(hexagon));
     }
-    canvas.setCanvasColor(100, 200, 40);
-    for (let corner of LayoutHelper.polygonCorners(layout, new Hex(0, 1, -1))) {
-        canvas.draw(corner.x, corner.y);
+
+
+
+    /** map_small_biome */
+    world = Game.generateProceduralWorld(ProceduralType.SMALL_BIOME);
+
+    for (let hexagon of world.allOccupiedHexagons) {
+        map_small_biome.drawHex(hexagon, world.getBiomeFromHex(hexagon));
     }
-    canvas.setCanvasColor(100, 0, 200);
-    for (let corner of LayoutHelper.polygonCorners(layout, new Hex(-1, 0, 1))) {
-        canvas.draw(corner.x, corner.y);
+
+
+
+    /** map_big_biome */
+    world = Game.generateProceduralWorld(ProceduralType.BIG_BIOME);
+
+    for (let hexagon of world.allOccupiedHexagons) {
+        map_big_biome.drawHex(hexagon, world.getBiomeFromHex(hexagon));
     }
-    canvas.setCanvasColor(100, 200, 40);
-    for (let corner of LayoutHelper.polygonCorners(layout, new Hex(1, 0, -1))) {
-        canvas.draw(corner.x, corner.y);
-    }
-    for (let corner of LayoutHelper.polygonCorners(layout, new Hex(-1, 1, 0))) {
-        canvas.draw(corner.x, corner.y);
-    }
-    canvas.setCanvasColor(60, 120, 200);
-    for (let corner of LayoutHelper.polygonCorners(layout, new Hex(1, -1, 0))) {
-        canvas.draw(corner.x, corner.y);
+
+
+
+    /** map_single_biome */
+    world = Game.generateProceduralWorld(ProceduralType.SINGLE_BIOME);
+
+    for (let hexagon of world.allOccupiedHexagons) {
+        map_single_biome.drawHex(hexagon, world.getBiomeFromHex(hexagon));
     }
 }

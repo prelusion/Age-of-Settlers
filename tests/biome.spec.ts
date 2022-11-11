@@ -1,7 +1,7 @@
 import {Biome} from "../src/biomes/Biome";
-import {BiomeType} from "../src/biomes/BiomeType";
+import {BiomeType} from "../src/data/types/BiomeType";
 import {assert} from "chai";
-import {CollectableType} from "../src/resources/ResourceType";
+import {CollectableType} from "../src/data/types/ResourceType";
 import {BiomeHelper} from "../src/data/helper/BiomeHelper";
 import biomes from "../src/data/biomes";
 
@@ -34,7 +34,6 @@ describe("Biome", function () {
                     }
                 }
             }
-
 
             assert.isTrue(collectedTypes.has("OAKWOOD"));
             assert.isTrue(collectedTypes.has("BEAR"));

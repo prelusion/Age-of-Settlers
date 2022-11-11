@@ -1,8 +1,8 @@
 import type {BiomeDataCollectables} from "../biomes";
 import biomes from "../biomes";
 import {Random} from "../../util/Random";
-import type {CollectableType} from "../../resources/ResourceType";
-import type {BiomeType} from "../../biomes/BiomeType";
+import type {CollectableType} from "../types/ResourceType";
+import type {BiomeType} from "../types/BiomeType";
 import {Obj} from "../../util/TypeHint";
 
 export class BiomeHelper {

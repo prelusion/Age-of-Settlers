@@ -15,6 +15,19 @@ export class Hex {
         return new Hex(0, 0, 0);
     }
 
+    /**
+     * Expects something like >  Hex[-1,0,1]
+     * @param hex
+     * @constructor
+     */
+    public static FromHexString(hex: string): Hex {
+        if(!hex) {
+            return Hex.Zero();
+        }
+        let h = JSON.parse(hex.split("Hex")[1]);
+        return new Hex(h[0], h[1], h[2]);
+    }
+
     public toString(): string {
         return `Hex[${this.q},${this.s},${this.r}]`;
     }

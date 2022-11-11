@@ -1,84 +1,77 @@
-import {Bestagon} from "../bestagon/Bestagon";
-import {GameHelper} from "./GameHelper";
-import {Hex} from "../Layout/Hex";
-
-export interface BestagonData {
-    bestagon: Bestagon,
-}
+import {World} from "./World";
+import {Hex} from "../layout/Hex";
+import type {ProceduralType} from "../data/types/ProceduralType";
+import {ProceduralGenerator} from "../procedural/ProceduralGenerator";
+import * as Util from "util";
 
 export class Game {
-    private map: BestagonData[];
+    public static generateProceduralWorld(type: ProceduralType): World {
+        console.log("Generating the world through the following procedural generation " + type)
+        const world = new World();
+        let worldGenerator = new ProceduralGenerator(type);
+        let counter = 0;
+        while (counter < worldGenerator.totalSize) {
+            let test = false;
 
-    /**
-     * This set is a Coordinates object. This is done to simply use the
-     * Set features to check chosen bestagon locations if they're allowed to contain a new bestagon.
-     */
-    private readonly availableBestagons: Set<string>;
-    private readonly occupiedBestagons: Set<string>;
+            let hex = world.getRandomAvailableHex();
+            console.log(hex);
+            if (hex === undefined) {
+                break;
+            }
 
-    constructor() {
-        this.map = [];
+            if(!this.isBorder(hex, worldGenerator)) {
+                test = true;
+            } else {
+                world.blacklistHexagon(hex);
+            }
 
-        let initial = Hex.Zero();
-
-        this.availableBestagons = new Set([initial.toString()]);
-        this.occupiedBestagons = new Set([initial.toString()]);
-
-        this.generateBestagon(initial);
-    }
-
-    generateBestagon(hex: Hex) {
-        if(this.coordinatesTaken(hex)) {
-            return;
-        }
-
-        if(!this.bestagonConnected(hex)) {
-            return;
-        }
-
-        this.map.push({
-            bestagon: new Bestagon(hex),
-        });
-        this.blacklistBestagon(hex);
-        this.whitelistBestagons(hex);
-    }
-
-    get bestagonCount() {
-        return this.map.length;
-    }
-
-    get availableCoordinates() {
-        return this.availableBestagons
-    }
-
-    get occupiedCoordinates() {
-        return this.occupiedBestagons
-    }
-
-    validCoordinates(hex: Hex): boolean {
-        return hex.q + hex.s + hex.r === 0;
-    }
-
-    blacklistBestagon(hex: Hex) {
-        this.occupiedBestagons.add(hex.toString());
-        this.availableBestagons.delete(hex.toString());
-    }
-
-    coordinatesTaken(hex: Hex): boolean {
-        return this.map.some(b => b.bestagon.hex.equals(hex));
-    }
-
-    whitelistBestagons(hex: Hex) {
-        let adjacentHexes = GameHelper.giveAdjacentBestagonCoordinates(hex);
-        for (let adjacentHex of adjacentHexes) {
-            let hexStr = adjacentHex.toString();
-            if(!this.occupiedBestagons.has(hexStr)) {
-                this.availableBestagons.add(hexStr);
+            if (test) {
+                counter++;
+                let biome = worldGenerator.getBiome(hex, world);
+                world.generateHexagon(hex, biome);
             }
         }
+
+        return world;
     }
 
-    bestagonConnected(hex: Hex): boolean {
-        return this.availableBestagons.has(hex.toString());
+
+    public static isBorder(hex: Hex, p: ProceduralGenerator): boolean {
+        if (
+            Math.abs(hex.q) === Math.ceil(p.totalHeight/2) ||
+            Math.abs(hex.s) === Math.floor(p.totalWidth/2)
+        ) {
+            return true;
+        }
+        return false;
     }
+
+    /**
+     * for testing purposes only.
+     * @param game
+     */
+    public static generateTinyGrid(game: World) {
+        // @formatter:off
+        game.generateHexagon(new Hex(0,  -1,  1));
+        game.generateHexagon(new Hex(0,   1, -1));
+        game.generateHexagon(new Hex(-1,  0,  1));
+        game.generateHexagon(new Hex(1,   0, -1));
+        game.generateHexagon(new Hex(-1,  1,  0));
+        game.generateHexagon(new Hex(1,  -1,  0));
+        // @formatter:on
+    }
+
+    public static giveAdjacentHexs(h: Hex): Hex[] {
+        let adjacentCoordinates: Hex[] = [];
+        // @formatter:off
+        adjacentCoordinates.push(new Hex(h.q,      h.s - 1,  h.r + 1));
+        adjacentCoordinates.push(new Hex(h.q,      h.s + 1,  h.r - 1));
+        adjacentCoordinates.push(new Hex(h.q - 1,  h.s,      h.r + 1));
+        adjacentCoordinates.push(new Hex(h.q + 1,  h.s,      h.r - 1));
+        adjacentCoordinates.push(new Hex(h.q - 1,  h.s + 1,  h.r    ));
+        adjacentCoordinates.push(new Hex(h.q + 1,  h.s - 1,  h.r    ));
+        // @formatter:on
+        return adjacentCoordinates;
+    }
+
 }

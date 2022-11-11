@@ -2,14 +2,52 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/x-icon" href="fav.png">
+    <link rel="icon" type="image/x-icon" href="images/fav.png">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Web site created using create-snowpack-app" />
     <link rel="stylesheet" type="text/css" href="/index.css" />
     <title>Age of Settlers</title>
   </head>
   <body>
-    <canvas id="canvas" width="1900" height="1080"></canvas>
+  <div style="position: absolute; right: 20px; top: 20px; display: flex; flex-direction: column;">
+    <div style="z-index: 4; background-color: #666; padding: 5px 30px 5px 5px; cursor: pointer; margin: 5px 0; width: 100px; height: 30px;" onclick="showCanvas('map_random')">map_random</div>
+    <div style="z-index: 4; background-color: #666; padding: 5px 30px 5px 5px; cursor: pointer; margin: 5px 0; width: 100px; height: 30px;" onclick="showCanvas('map_small_biome')">map_small_biome</div>
+    <div style="z-index: 4; background-color: #666; padding: 5px 30px 5px 5px; cursor: pointer; margin: 5px 0; width: 100px; height: 30px;" onclick="showCanvas('map_big_biome')">map_big_biome</div>
+    <div style="z-index: 4; background-color: #666; padding: 5px 30px 5px 5px; cursor: pointer; margin: 5px 0; width: 100px; height: 30px;" onclick="showCanvas('map_single_biome')">map_single_biome</div>
+    <div style="z-index: 4; background-color: #666; padding: 5px 30px 5px 5px; cursor: pointer; margin: 5px 0; width: 100px; height: 30px;" onclick="showCanvas('canvas')">canvas</div>
+
+  </div>
+
+  <script>
+    function showCanvas(name) {
+      var ele = document.getElementById(name);
+
+      if (ele.style.display === "none") {
+        document.getElementById("map_random").style.display = "none";
+        document.getElementById("map_small_biome").style.display = "none";
+        document.getElementById("map_big_biome").style.display = "none";
+        document.getElementById("map_single_biome").style.display = "none";
+        document.getElementById("canvas").style.display = "none";
+        ele.style.display = "block";
+      }
+    }
+  </script>
+  <div style="position: relative;">
+    <canvas  class="hide-canvas" id="map_random" width="3000" height="2000" style="display: none; position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
+    <canvas  class="hide-canvas" id="map_small_biome" width="3000" height="2000" style="display: none; position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
+    <canvas  class="hide-canvas" id="map_big_biome" width="3000" height="2000" style="display: none; position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
+    <canvas  class="hide-canvas" id="map_single_biome" width="3000" height="2000" style="display: none; position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
+    <canvas  class="hide-canvas" id="canvas" width="3000" height="2000"></canvas>
+
+    <canvas id="buildings" width="3000" height="2000" style="position: absolute; left: 0; top: 0; z-index: 1;"></canvas>
+    <canvas id="units" width="3000" height="2000" style="position: absolute; left: 0; top: 0; z-index: 2;"></canvas>
+
+    <img id="plains" src="images/plains.png" hidden>
+    <img id="forest" src="images/forest.png" hidden>
+    <img id="mountain" src="images/mountain.png" hidden>
+    <img id="water" src="images/water.png" hidden>
+  </div>
+
     <script type="module" src="/dist/index.js"></script>
     <!--
       This HTML file is a template.
