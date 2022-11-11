@@ -1,8 +1,8 @@
 import type {Player} from "../player/Player";
 import type {Tickable} from "../game/Tickable";
+import type {Hex} from "../Layout/Hex";
 import {Biome} from "../biomes/Biome";
 import {BiomeHelper} from "../data/helper/BiomeHelper";
-import {Hex} from "../Layout/Hex";
 
 /**
  * https://www.redblobgames.com/grids/hexagons/#coordinates
@@ -10,7 +10,7 @@ import {Hex} from "../Layout/Hex";
 export class Bestagon implements Tickable {
     private hasPlayer: boolean;
     private inCombat: boolean;
-    private coordinates: Hex;
+    private readonly _hex: Hex;
 
     // Todo Add Building Type.
     private connectedBuildings: any[];
@@ -18,13 +18,13 @@ export class Bestagon implements Tickable {
     private engagedBy: Player[];
     private biome: Biome;
 
-    constructor(coords: Hex) {
+    constructor(hex: Hex) {
         this.hasPlayer = false;
         this.inCombat = false;
         this.connectedBuildings = [];
         this.activeBy = [];
         this.engagedBy = [];
-        this.coordinates = coords;
+        this._hex = hex;
 
         this.biome = new Biome(BiomeHelper.getRandomBiomeType());
     }
@@ -35,7 +35,7 @@ export class Bestagon implements Tickable {
         this.biome.tick();
     }
 
-    public get coords(): Hex {
-        return this.coordinates;
+    public get hex(): Hex {
+        return this._hex;
     }
 }

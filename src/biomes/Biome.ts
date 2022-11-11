@@ -1,11 +1,11 @@
 import type {CollectableFields, CollectableNumberFields, IBiome} from "./IBiome";
 import type {BiomeType} from "./BiomeType";
 import type {CollectableType} from "../resources/ResourceType";
-import biomes, {BiomeData} from "../data/biomes";
 import type {Tickable} from "../game/Tickable";
-import collectables from "../data/collectables";
 import {Obj} from "../util/TypeHint";
+import collectables from "../data/collectables";
 import {BiomeHelper} from "../data/helper/BiomeHelper";
+import biomes, {BiomeData} from "../data/biomes";
 
 export class Biome implements IBiome, Tickable {
     collectables: CollectableFields;
@@ -31,7 +31,7 @@ export class Biome implements IBiome, Tickable {
         let collectables = biomes[type].collectables;
 
         for (let coll of collectables) {
-            if(BiomeHelper.shouldCollSpawn(coll)) {
+            if (BiomeHelper.shouldCollSpawn(coll)) {
                 this.setCollectableQuantity(
                     coll.type,
                     0,
@@ -61,7 +61,7 @@ export class Biome implements IBiome, Tickable {
     public get CollectablesRecoveryRates(): CollectableNumberFields {
         let recoveryRates: CollectableNumberFields = {};
 
-        for(let type of this.collectableTypes) {
+        for (let type of this.collectableTypes) {
             recoveryRates[type] = collectables[type].recoveryRate;
         }
         return recoveryRates;

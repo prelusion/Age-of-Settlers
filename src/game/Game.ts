@@ -65,7 +65,7 @@ export class Game {
     }
 
     coordinatesTaken(hex: Hex): boolean {
-        return this.map.some(b => b.bestagon.coords.equals(hex));
+        return this.map.some(b => b.bestagon.hex.equals(hex));
     }
 
     whitelistBestagons(hex: Hex) {
