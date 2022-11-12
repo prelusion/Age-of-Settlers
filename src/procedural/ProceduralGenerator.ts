@@ -49,7 +49,6 @@ export class ProceduralGenerator implements ProceduralData {
         let alreadyCheckBiomes: Hex[] = [];
 
         let types = Random.shuffledCopy(Obj.values(BiomeType));
-        console.log(types);
         let type = BiomeHelper.getRandomBiomeType();
         for (let t of types) {
             let biomeSize = world.checkBiomeSizeOfHex(hex, t, alreadyCheckBiomes)

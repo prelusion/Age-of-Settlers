@@ -35,17 +35,17 @@ export default {
         type: ProceduralType.BIG_BIOME,
         maxBiomeSize: 30,
         minBiomeSize: 5,
-        totalSize: 500,
-        totalWidth: 40,
-        totalHeight: 40,
+        totalSize: 1000,
+        totalWidth: 80,
+        totalHeight: 80,
     },
     [ProceduralType.SINGLE_BIOME]: {
         name: "Single Biome",
         type: ProceduralType.SINGLE_BIOME,
         maxBiomeSize: 999,
         minBiomeSize: 999,
-        totalSize: 500,
-        totalWidth: 40,
-        totalHeight: 40,
+        totalSize: 1000,
+        totalWidth: 80,
+        totalHeight: 80,
     }
 } as Record<ProceduralType, ProceduralData>

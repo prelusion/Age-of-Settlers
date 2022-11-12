@@ -43,8 +43,6 @@ export class Canvas {
 function getCanvasIfSupported(id: string = "canvas"): CanvasRenderingContext2D {
     console.log(id);
     let canvas = document.getElementById(id) as HTMLCanvasElement;
-    console.log(canvas);
-    console.log(canvas);
     // @ts-ignore
     return canvas.getContext("2d");
 }

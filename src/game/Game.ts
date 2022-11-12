@@ -14,7 +14,6 @@ export class Game {
             let test = false;
 
             let hex = world.getRandomAvailableHex();
-            console.log(hex);
             if (hex === undefined) {
                 break;
             }

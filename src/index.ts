@@ -5,6 +5,8 @@ import {Layout, LAYOUT_FLAT, LAYOUT_POINTY} from "./layout/Layout";
 import {Point} from "./layout/Point";
 import {ImageFactory} from "./util/ImageFactory";
 import {ProceduralType} from "./data/types/ProceduralType";
+import {BiomeType} from "./data/types/BiomeType";
+import {BiomeHelper} from "./data/helper/BiomeHelper";
 
 const imageFactory = new ImageFactory();
 const canvas = new Canvas("canvas");
@@ -22,7 +24,7 @@ function main() {
         return;
     }
 
-    Layout.setLayout(LAYOUT_POINTY, new Point(50, 50), new Point(1000, 1000));
+    Layout.setLayout(LAYOUT_POINTY, new Point(50, 50), new Point(2500, 2500));
     canvas.setCanvasColor(200, 0, 100);
 
     /** canvas */
