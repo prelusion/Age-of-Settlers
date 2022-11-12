@@ -6,6 +6,7 @@ import {BiomeHelper} from "../data/helper/BiomeHelper";
 import type {World} from "../game/World";
 import type {Hex} from "../layout/Hex";
 import {Random} from "../util/Random";
+import {Obj} from "../util/TypeHint";
 
 export class ProceduralGenerator implements ProceduralData {
     name: string;
@@ -47,7 +48,7 @@ export class ProceduralGenerator implements ProceduralData {
     private getBetweenSizeBiome(hex: Hex, world: World): BiomeType {
         let alreadyCheckBiomes: Hex[] = [];
 
-        let types = Random.shuffle(Object.keys(BiomeType));
+        let types = Random.shuffledCopy(Obj.values(BiomeType));
         console.log(types);
         let type = BiomeHelper.getRandomBiomeType();
         for (let t of types) {
