@@ -1,4 +1,4 @@
-import {CollectableType, ResourceType} from "../resources/ResourceType";
+import {CollectableType, ResourceType} from "./types/ResourceType";
 
 export interface CollectableData {
     name: string;
@@ -12,6 +12,7 @@ export type CollectableDataResource = Array<{
     quantity: number;
     gatherRate: number;
 }>;
+
 
 // Todo: If this has red lines, it is because not all collectables have been implemented here yet 🙃
 export default {

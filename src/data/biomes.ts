@@ -1,5 +1,5 @@
-import {CollectableType} from "../resources/ResourceType";
-import {BiomeType} from "../biomes/BiomeType";
+import {CollectableType} from "./types/ResourceType";
+import {BiomeType} from "./types/BiomeType";
 
 export interface BiomeData {
     name: string;
@@ -21,7 +21,7 @@ export default {
         name: "Plains",
         type: BiomeType.PLAINS,
         movementModifier: 1,
-        spawnChance: 1,
+        spawnChance: 40,
         collectables: [
             {
                 type: CollectableType.BOAR,
@@ -53,7 +53,7 @@ export default {
         name: "Forest",
         type: BiomeType.FOREST,
         movementModifier: .8,
-        spawnChance: 1,
+        spawnChance: 20,
         collectables: [
             {
                 type: CollectableType.OAKWOOD,
@@ -79,7 +79,7 @@ export default {
         name: "Mountain",
         type: BiomeType.MOUNTAIN,
         movementModifier: .5,
-        spawnChance: 1,
+        spawnChance: 10,
         collectables: [
             {
                 type: CollectableType.STONE,
@@ -102,6 +102,20 @@ export default {
                 spawnChance: .4,
                 gatherModifier: .5
             },
+        ]
+    },
+    [BiomeType.WATER]: {
+        name: "Water",
+        type: BiomeType.WATER,
+        movementModifier: 1,
+        spawnChance: 10,
+        collectables: [
+            {
+                type: CollectableType.FISH,
+                quantity: [200, 800],
+                spawnChance: 1,
+                gatherModifier: 1
+            }
         ]
     }
 } as Record<BiomeType, BiomeData>

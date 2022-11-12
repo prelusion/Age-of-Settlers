@@ -1,33 +1,36 @@
 import type {Player} from "../player/Player";
 import type {Tickable} from "../game/Tickable";
+import type {Hex} from "../layout/Hex";
 import {Biome} from "../biomes/Biome";
-import {BiomeHelper} from "../data/helper/BiomeHelper";
-import type {Coordinates} from "../game/Game";
+import type {BiomeType} from "../data/types/BiomeType";
 
 /**
+ * This class handles all actions within a single hexagon. Coordinates are handled by the Hex (.hex) object.
+ *
+ * > Hexagon is the BESTAGON!  -- CGP Grey
+ *
  * https://www.redblobgames.com/grids/hexagons/#coordinates
  */
-
-export class Bestagon implements Tickable {
+export class Hexagon implements Tickable {
     private hasPlayer: boolean;
     private inCombat: boolean;
-    private coordinates: Coordinates;
+    private readonly _hex: Hex;
 
     // Todo Add Building Type.
     private connectedBuildings: any[];
     private activeBy: Player[];
     private engagedBy: Player[];
-    private biome: Biome;
+    private readonly _biome: Biome;
 
-    constructor(coords: Coordinates) {
+    constructor(hex: Hex, biome: BiomeType) {
         this.hasPlayer = false;
         this.inCombat = false;
         this.connectedBuildings = [];
         this.activeBy = [];
         this.engagedBy = [];
-        this.coordinates = coords;
+        this._hex = hex;
 
-        this.biome = new Biome(BiomeHelper.getRandomBiomeType());
+        this._biome = new Biome(biome);
     }
 
     public tick(): void {
@@ -36,7 +39,11 @@ export class Bestagon implements Tickable {
         this.biome.tick();
     }
 
-    public get coords(): Coordinates {
-        return this.coordinates;
+    public get hex(): Hex {
+        return this._hex;
+    }
+
+    public get biome(): Biome {
+        return this._biome;
     }
 }

@@ -1,25 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/x-icon" href="fav.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Web site created using create-snowpack-app" />
-    <link rel="stylesheet" type="text/css" href="/index.css" />
+<head>
+    <meta charset="utf-8"/>
+    <link rel="icon" type="image/x-icon" href="images/fav.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="Web site created using create-snowpack-app"/>
+    <link rel="stylesheet" type="text/css" href="/index.css"/>
     <title>Age of Settlers</title>
-  </head>
-  <body>
-    <canvas id="canvas" width="1900" height="1080"></canvas>
-    <script type="module" src="/dist/index.js"></script>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+</head>
+<body>
+<div id="selected-generation" class="right-sidebar" style="color: white; margin-right: 200px; font-size: 40px">
+    map_random
+</div>
+<div class="right-sidebar">
+    <div class="canvas-btn" onclick="showCanvas('map_random')">map_random</div>
+    <div class="canvas-btn" onclick="showCanvas('map_small_biome')">map_small_biome</div>
+    <div class="canvas-btn" onclick="showCanvas('map_big_biome')">map_big_biome</div>
+    <div class="canvas-btn" onclick="showCanvas('map_single_biome')">map_single_biome</div>
+    <div class="canvas-btn" onclick="showCanvas('canvas')">canvas</div>
+</div>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+<script>
+    function showCanvas(name) {
+        let ele = document.getElementById(name);
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+        if (ele.style.display === "none") {
+            document.getElementById("map_random").style.display = "none";
+            document.getElementById("map_small_biome").style.display = "none";
+            document.getElementById("map_big_biome").style.display = "none";
+            document.getElementById("map_single_biome").style.display = "none";
+            document.getElementById("canvas").style.display = "none";
+            document.getElementById("selected-generation").textContent = name;
+            ele.style.display = "block";
+        }
+    }
+</script>
+<div style="position: relative;">
+    <canvas class="hide-canvas" id="map_random" width="5000" height="3000" style="display: none;"></canvas>
+    <canvas class="hide-canvas" id="map_small_biome" width="5000" height="3000" style="display: none;"></canvas>
+    <canvas class="hide-canvas" id="map_big_biome" width="5000" height="3000" style="display: none;"></canvas>
+    <canvas class="hide-canvas" id="map_single_biome" width="5000" height="3000" style="display: none;"></canvas>
+    <canvas class="hide-canvas" id="canvas" width="5000" height="3000"></canvas>
+    <canvas id="buildings" width="5000" height="3000"
+            style="position: absolute; left: 0; top: 0; z-index: 1;"></canvas>
+    <canvas id="units" width="5000" height="3000" style="position: absolute; left: 0; top: 0; z-index: 2;"></canvas>
+
+    <img id="plains" src="images/plains.png" hidden>
+    <img id="forest" src="images/forest.png" hidden>
+    <img id="mountain" src="images/mountain.png" hidden>
+    <img id="water" src="images/water.png" hidden>
+</div>
+
+<script type="module" src="/dist/index.js"></script>
+<!--
+  This HTML file is a template.
+  If you open it directly in the browser, you will see an empty page.
+
+  You can add webfonts, meta tags, or analytics to this file.
+  The build step will place the bundled scripts into the <body> tag.
+
+  To begin the development, run `npm start` or `yarn start`.
+  To create a production bundle, use `npm run build` or `yarn build`.
+-->
+</body>
 </html>

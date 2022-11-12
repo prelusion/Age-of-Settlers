@@ -25,4 +25,44 @@ export class Random {
     public static chance(chance: number): boolean {
         return Math.random() < chance;
     }
+
+    /**
+     * Get a random element from an array
+     *
+     * @param arr
+     */
+    public static choice<T>(arr: T[]): T {
+        return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    /**
+     * Shuffle the given array in-place
+     *
+     * @author Laurens Holst @ https://stackoverflow.com/a/12646864/7230293
+     *
+     * @param array
+     */
+    public static shuffle<T>(array: T[]): T[] {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    /**
+     * Copy an array and shuffle it
+     *
+     * @author Ben Carp @ https://stackoverflow.com/a/46161940/7230293
+     *
+     * @param array
+     */
+    public static shuffledCopy<T>(array: T[]): T[] {
+        const newArr = array.slice()
+        for (let i = newArr.length - 1; i > 0; i--) {
+            const rand = Math.floor(Math.random() * (i + 1));
+            [newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
+        }
+        return newArr;
+    }
 }

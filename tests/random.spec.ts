@@ -1,7 +1,5 @@
 import {Random} from "../src/util/Random";
 import {assert} from "chai";
-import {BiomeType} from "../src/biomes/BiomeType";
-import type {BiomeData} from "../src/data/biomes";
 
 describe("Random", function () {
 
