@@ -37,7 +37,6 @@ export class Canvas {
         this.ctx.fillStyle = this.ctx.createPattern(ImageFactory.singleton().getImage(biome), "repeat") as CanvasPattern
         this.ctx.fill();
     }
-
 }
 
 function getCanvasIfSupported(id: string = "canvas"): CanvasRenderingContext2D {

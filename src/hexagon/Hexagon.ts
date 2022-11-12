@@ -2,10 +2,13 @@ import type {Player} from "../player/Player";
 import type {Tickable} from "../game/Tickable";
 import type {Hex} from "../layout/Hex";
 import {Biome} from "../biomes/Biome";
-import {BiomeHelper} from "../data/helper/BiomeHelper";
 import type {BiomeType} from "../data/types/BiomeType";
 
 /**
+ * This class handles all actions within a single hexagon. Coordinates are handled by the Hex (.hex) object.
+ *
+ * > Hexagon is the BESTAGON!  -- CGP Grey
+ *
  * https://www.redblobgames.com/grids/hexagons/#coordinates
  */
 export class Hexagon implements Tickable {

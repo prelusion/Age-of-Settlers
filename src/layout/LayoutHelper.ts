@@ -18,7 +18,7 @@ export class LayoutHelper {
         );
         let q = orientation.b0 * p.x + orientation.b1 * p.y;
         let r = orientation.b2 * p.x + orientation.b3 * p.y;
-        return new Hex(q, r, -q - r);
+        return new Hex(q, -q - r, r);
     }
 
     public static hexCornerOffset(corner: number): Point {

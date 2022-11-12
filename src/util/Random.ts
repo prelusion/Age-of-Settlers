@@ -27,10 +27,11 @@ export class Random {
     }
 
     /**
+     * Get a random element from an array
      *
      * @param arr
      */
-    public static arrayValueAsString(arr: any): string {
+    public static choice<T>(arr: T[]): T {
         return arr[Math.floor(Math.random() * arr.length)];
     }
 
@@ -41,11 +42,12 @@ export class Random {
      *
      * @param array
      */
-    public static shuffle<T>(array: T[]): void {
+    public static shuffle<T>(array: T[]): T[] {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
         }
+        return array;
     }
 
     /**

@@ -46,12 +46,10 @@ export class ProceduralGenerator implements ProceduralData {
     }
 
     private getBetweenSizeBiome(hex: Hex, world: World): BiomeType {
-        let alreadyCheckBiomes: Hex[] = [];
-
-        let types = Random.shuffledCopy(Obj.values(BiomeType));
+        let types = Random.shuffle(Obj.values(BiomeType));
         let type = BiomeHelper.getRandomBiomeType();
         for (let t of types) {
-            let biomeSize = world.checkBiomeSizeOfHex(hex, t, alreadyCheckBiomes)
+            let biomeSize = world.checkBiomeSizeOfHex(hex, t)
             if (biomeSize > this.minBiomeSize && biomeSize < this.maxBiomeSize) {
                 type = t;
                 break;
@@ -61,7 +59,8 @@ export class ProceduralGenerator implements ProceduralData {
         return type;
 
     }
+
     private getSingleBiome(world: World): BiomeType {
-        return world.getAOccupiedHexagon().biome.type;
+        return world.getFirstOccupiedHexagon().biome.type;
     }
 }

@@ -8,13 +8,17 @@ export class ImageFactory {
     private water = new Image();
     private static instance: ImageFactory;
 
+    private constructor() {
+    }
+
     public static singleton() {
         if(!ImageFactory.instance) {
             ImageFactory.instance = new ImageFactory();
         }
         return ImageFactory.instance;
     }
-    constructor() {
+
+    public initialize() {
         this.plains.src = ensure(ensure(document.querySelector("#plains")).getAttribute("src"));
         this.forest.src = ensure(ensure(document.querySelector("#forest")).getAttribute("src"));
         this.mountain.src = ensure(ensure(document.querySelector("#mountain")).getAttribute("src"));

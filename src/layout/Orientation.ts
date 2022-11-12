@@ -9,7 +9,11 @@ export class Orientation {
     public b3: number
     public startAngle: number
 
-    constructor(f0: number, f1: number, f2: number, f3: number, b0: number, b1: number, b2: number, b3: number, startAngle: number) {
+    constructor(
+        f0: number, f1: number, f2: number, f3: number,
+        b0: number, b1: number, b2: number, b3: number,
+        startAngle: number
+    ) {
         this.f0 = f0;
         this.f1 = f1;
         this.f2 = f2;
