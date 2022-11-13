@@ -34,6 +34,7 @@ export class Canvas {
             /** Coords on Hexa debugging **/
             // this.ctx.fillText(hex.toString(), corner.x, corner.y, 200)
         }
+
         this.ctx.fillStyle = this.ctx.createPattern(ImageFactory.singleton().getImage(biome), "repeat") as CanvasPattern
         this.ctx.fill();
     }

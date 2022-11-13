@@ -16,13 +16,15 @@ canvas {
 }
 
 .right-sidebar .canvas-btn {
+    font-size: 30px;
+    color: white;
     z-index: 4;
     background-color: #666;
-    padding: 5px 30px 5px 5px;
+    padding: 10px 30px 10px 10px;
     cursor: pointer;
     margin: 5px 0;
-    width: 100px;
-    height: 30px;
+    width: 200px;
+    height: 50px;
 }
 
 .hide-canvas {

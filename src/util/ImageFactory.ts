@@ -35,7 +35,6 @@ export class ImageFactory {
                 return this.plains;
             case BiomeType.WATER:
                 return this.water;
-
         }
     }
 
