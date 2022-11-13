@@ -117,5 +117,121 @@ export default {
                 gatherModifier: 1
             }
         ]
+    },
+
+    /**
+     * All biome data values underneath this comment are not correct yet.
+     */
+    [BiomeType.HILLS]: {
+        name: "Hills",
+        type: BiomeType.HILLS,
+        movementModifier: 1,
+        spawnChance: 10,
+        collectables: [
+            {
+                type: CollectableType.STONE,
+                quantity: [200, 800],
+                spawnChance: 1,
+                gatherModifier: 1
+            }
+        ]
+    },
+    [BiomeType.DARK_OAK_FOREST]: {
+        name: "Dark Oak Forest",
+        type: BiomeType.DARK_OAK_FOREST,
+        movementModifier: 1,
+        spawnChance: 10,
+        collectables: [
+            {
+                type: CollectableType.DARKOAKWOOD,
+                quantity: [200, 800],
+                spawnChance: 1,
+                gatherModifier: 1
+            }
+        ]
+    },
+    [BiomeType.MISTY_FOREST]: {
+        name: "Misty Forest",
+        type: BiomeType.MISTY_FOREST,
+        movementModifier: 1,
+        spawnChance: 10,
+        collectables: [
+            {
+                type: CollectableType.OAKWOOD,
+                quantity: [200, 800],
+                spawnChance: 1,
+                gatherModifier: 1
+            }
+        ]
+    },
+    [BiomeType.CAVE]: {
+        name: "Cave",
+        type: BiomeType.CAVE,
+        movementModifier: 1,
+        spawnChance: 10,
+        collectables: [
+            {
+                type: CollectableType.STONE,
+                quantity: [200, 800],
+                spawnChance: 1,
+                gatherModifier: 1
+            }
+        ]
+    },
+    [BiomeType.RIVER]: {
+        name: "River",
+        type: BiomeType.RIVER,
+        movementModifier: 1,
+        spawnChance: 10,
+        collectables: [
+            {
+                type: CollectableType.FISH,
+                quantity: [200, 800],
+                spawnChance: 1,
+                gatherModifier: 1
+            }
+        ]
+    },
+    [BiomeType.DESERT]: {
+        name: "Desert",
+        type: BiomeType.DESERT,
+        movementModifier: 1,
+        spawnChance: 10,
+        collectables: [
+            {
+                type: CollectableType.GOAT,
+                quantity: [200, 800],
+                spawnChance: 1,
+                gatherModifier: 1
+            }
+        ]
+    },
+    [BiomeType.OCEAN]: {
+        name: "Ocean",
+        type: BiomeType.OCEAN,
+        movementModifier: 1,
+        spawnChance: 10,
+        collectables: [
+            {
+                type: CollectableType.FISH,
+                quantity: [200, 800],
+                spawnChance: 1,
+                gatherModifier: 1
+            }
+        ]
+    },
+    [BiomeType.WASTELANDS]: {
+        name: "Wastelands",
+        type: BiomeType.WASTELANDS,
+        movementModifier: 1,
+        spawnChance: 10,
+        collectables: [
+            {
+                type: CollectableType.FISH,
+                quantity: [200, 800],
+                spawnChance: 1,
+                gatherModifier: 1
+            }
+        ]
     }
 } as Record<BiomeType, BiomeData>

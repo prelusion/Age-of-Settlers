@@ -35,7 +35,7 @@ export default {
         type: ProceduralType.BIG_BIOME,
         maxBiomeSize: 30,
         minBiomeSize: 20,
-        totalSize: 500,
+        totalSize: 300,
         totalWidth: 57,
         totalHeight: 38,
     },
@@ -44,7 +44,7 @@ export default {
         type: ProceduralType.SINGLE_BIOME,
         maxBiomeSize: 999,
         minBiomeSize: 999,
-        totalSize: 1000,
+        totalSize: 300,
         totalWidth: 57,
         totalHeight: 38,
     }
