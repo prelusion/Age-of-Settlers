@@ -52,7 +52,7 @@ function debugMode(selectedElement: HTMLElement) {
     if(debug) {
         $(selectedElement).addClass("debug-selected");
     } else {
-        $(selectedElement).remove("debug-selected");
+        $(selectedElement).removeClass("debug-selected");
     }
 }
 function selectedProcedure(selectedElement: HTMLElement) {
