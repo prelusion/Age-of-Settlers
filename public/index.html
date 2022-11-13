@@ -9,38 +9,26 @@
     <title>Age of Settlers</title>
 </head>
 <body>
-<div id="selected-generation" class="right-sidebar" style="color: white; margin-right: 300px; font-size: 60px">
-    map_random
-</div>
-<div class="right-sidebar">
-    <div class="canvas-btn" onclick="showCanvas('map_random')">map_random</div>
-    <div class="canvas-btn" onclick="showCanvas('map_small_biome')">map_small_biome</div>
-    <div class="canvas-btn" onclick="showCanvas('map_big_biome')">map_big_biome</div>
-    <div class="canvas-btn" onclick="showCanvas('map_single_biome')">map_single_biome</div>
-    <div class="canvas-btn" onclick="showCanvas('canvas')">canvas</div>
+<div class="right-sidebar" style="z-index: 99;">
+    <div id="debug" class="debug-btn">debug</div>
+    <div id="map_random" class="procedure-btn">map_random</div>
+    <div id="map_small_biome" class="procedure-btn">map_small_biome</div>
+    <div id="map_big_biome" class="procedure-btn">map_big_biome</div>
+    <div id="map_single_biome" class="procedure-btn">map_single_biome</div>
 </div>
 
-<script>
-    function showCanvas(name) {
-        let ele = document.getElementById(name);
+<div id="selected_hexagon" hidden>
+    <span id="hex">hex</span>
+    <p id="biome">biome</p>
+    <p id="hasPlayer">hasPlayer</p>
+    <p id="inCombat">inCombat</p>
+    <p id="connectedBuildings">connectedBuildings</p>
+    <p id="activeBy">activeBy</p>
+    <p id="engagedBy">engagedBy</p>
+</div>
 
-        if (ele.style.display === "none") {
-            document.getElementById("map_random").style.display = "none";
-            document.getElementById("map_small_biome").style.display = "none";
-            document.getElementById("map_big_biome").style.display = "none";
-            document.getElementById("map_single_biome").style.display = "none";
-            document.getElementById("canvas").style.display = "none";
-            document.getElementById("selected-generation").textContent = name;
-            ele.style.display = "block";
-        }
-    }
-</script>
 <div style="position: relative;">
-    <canvas class="hide-canvas" id="map_random" width="5000" height="3000" style="display: none;"></canvas>
-    <canvas class="hide-canvas" id="map_small_biome" width="5000" height="3000" style="display: none;"></canvas>
-    <canvas class="hide-canvas" id="map_big_biome" width="5000" height="3000" style="display: none;"></canvas>
-    <canvas class="hide-canvas" id="map_single_biome" width="5000" height="3000" style="display: none;"></canvas>
-    <canvas class="hide-canvas" id="canvas" width="5000" height="3000"></canvas>
+    <canvas class="hide-canvas" id="canvas" width="5000" height="3000" style="z-index: 10;"></canvas>
     <canvas id="buildings" width="5000" height="3000"
             style="position: absolute; left: 0; top: 0; z-index: 1;"></canvas>
     <canvas id="units" width="5000" height="3000" style="position: absolute; left: 0; top: 0; z-index: 2;"></canvas>
@@ -49,7 +37,8 @@
     <img id="forest" src="images/forest.png" hidden>
     <img id="mountain" src="images/mountain.png" hidden>
     <img id="water" src="images/water.png" hidden>
-  </div>
+</div>
+
 
 <script type="module" src="/dist/index.js"></script>
 <!--

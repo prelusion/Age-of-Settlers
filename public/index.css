@@ -1,5 +1,7 @@
 body {
     background: #111;
+    -webkit-text-size-adjust: auto;
+
 }
 
 canvas {
@@ -12,19 +14,42 @@ canvas {
     right: 20px;
     top: 20px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
-.right-sidebar .canvas-btn {
-    font-size: 30px;
+/**
+    Need something like SCSS / LESS. Duplicate css because using the classes in JS functions.
+ */
+.right-sidebar .debug-btn {
+    font-size: 3em;
     color: white;
     z-index: 4;
     background-color: #666;
     padding: 10px 30px 10px 10px;
     cursor: pointer;
     margin: 5px 0;
-    width: 200px;
     height: 50px;
+}
+
+.right-sidebar .procedure-btn {
+    font-size: 3em;
+    color: white;
+    z-index: 4;
+    background-color: #666;
+    padding: 10px 30px 10px 10px;
+    cursor: pointer;
+    margin: 5px 0;
+    height: 50px;
+}
+
+.debug-btn:hover {
+    background-color: white;
+    color: black;
+}
+
+.procedure-btn:hover {
+    background-color: white;
+    color: black;
 }
 
 .hide-canvas {
@@ -32,4 +57,26 @@ canvas {
     left: 0;
     top: 0;
     z-index: 0;
+}
+
+#selected_hexagon {
+    padding: 10px;
+    color: gold;
+    position:absolute;
+    z-index:12;
+    height: 500px;
+    width: 400px;
+    border: 1px solid darkmagenta;
+    font-size: 2em;
+    border-radius: 15px
+}
+
+.selected-procedure {
+    background-color: gold !important;
+    color: black !important;
+}
+
+.debug-selected {
+    background-color: gold !important;
+    color: black !important;
 }

@@ -67,6 +67,18 @@ export class World {
         }
     }
 
+    /**
+     * Returns first Hexagon (0, 0, 0) if given hex isn't found.
+     * @param hex
+     */
+    public getHexagonFromHex(hex: Hex): Hexagon | undefined {
+        return this.map.find((h) => {
+            if (h.hexagon.hex.equals(hex)) {
+                return h.hexagon
+            }
+        })?.hexagon;
+    }
+
     public setHexState(hex: Hex, state: HexState): void {
         nestedArraySet(this.hexState, hex.coordinates(), state);
     }

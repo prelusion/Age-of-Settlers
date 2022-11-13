@@ -44,7 +44,7 @@ export default {
         type: ProceduralType.SINGLE_BIOME,
         maxBiomeSize: 999,
         minBiomeSize: 999,
-        totalSize: 2000,
+        totalSize: 1000,
         totalWidth: 57,
         totalHeight: 38,
     }
