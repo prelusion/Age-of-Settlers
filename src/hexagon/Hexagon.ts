@@ -2,6 +2,7 @@ import type {Tickable} from "../game/Tickable";
 import type {Hex} from "../layout/Hex";
 import {Biome} from "../biomes/Biome";
 import type {BiomeType} from "../data/types/BiomeType";
+import {Player} from "../player/Player";
 
 /**
  * This class handles all actions within a single hexagon. Coordinates are handled by the Hex (.hex) object.
@@ -11,15 +12,15 @@ import type {BiomeType} from "../data/types/BiomeType";
  * https://www.redblobgames.com/grids/hexagons/#coordinates
  */
 export class Hexagon implements Tickable {
-    private _hasPlayer: boolean;
-    private _inCombat: boolean;
     private readonly _hex: Hex;
-
-    // Todo Add Building Type.
-    private _connectedBuildings: any[];
-    private _activeBy: Player[];
-    private _engagedBy: Player[];
     private readonly _biome: Biome;
+
+    // Currently unused
+    private readonly _hasPlayer: boolean;
+    private readonly _inCombat: boolean;
+    private readonly _connectedBuildings: any[];
+    private readonly _activeBy: Player[];
+    private readonly _engagedBy: Player[];
 
     constructor(hex: Hex, biome: BiomeType) {
         this._hasPlayer = false;
@@ -27,8 +28,8 @@ export class Hexagon implements Tickable {
         this._connectedBuildings = [];
         this._activeBy = [];
         this._engagedBy = [];
-        this._hex = hex;
 
+        this._hex = hex;
         this._biome = new Biome(biome);
     }
 
