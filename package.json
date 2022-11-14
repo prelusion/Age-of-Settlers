@@ -1,28 +1,25 @@
 {
-  "scripts": {
-    "start": "snowpack dev",
-    "build": "snowpack build",
-    "format": "prettier --write \"src/**/*.{ts,js}\"",
-    "lint": "prettier --check \"src/**/*.{ts,js}\"",
-    "test": "ts-mocha -n loader=ts-node/esm -p tsconfig.json \"tests/**/*.{ts,js}\"",
-    "code": "ts-mocha -n loader=ts-node/esm -p tsconfig.json \"tests/tester.spec.ts\""
-  },
-  "devDependencies": {
-    "@snowpack/plugin-typescript": "^1.2.1",
-    "@types/chai": "^4.3.4",
-    "@types/jquery": "^3.5.14",
-    "@types/mocha": "^10.0.0",
-    "@types/node": "^18.11.9",
-    "@types/snowpack-env": "^2.3.3",
-    "chai": "^4.3.7",
-    "mocha": "^10.1.0",
-    "prettier": "^2.2.1",
-    "snowpack": "^3.3.7",
-    "ts-mocha": "^10.0.0",
-    "ts-node": "^10.9.1",
-    "typescript": "^4.8.4"
-  },
-  "dependencies": {
-    "jquery": "^3.6.1"
-  }
+    "name": "age-of-settlers",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "test": "mocha"
+    },
+    "devDependencies": {
+        "@types/chai": "^4.3.4",
+        "@types/expect": "^24.3.0",
+        "@types/mocha": "^10.0.0",
+        "@types/node": "^18.11.9",
+        "chai": "^4.3.7",
+        "mocha": "^10.1.0",
+        "sass": "^1.56.1",
+        "ts-mocha": "^10.0.0",
+        "ts-node": "^10.9.1",
+        "typescript": "^4.6.4",
+        "vite": "^3.2.3"
+    }
 }

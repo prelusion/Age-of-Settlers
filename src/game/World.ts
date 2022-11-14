@@ -87,7 +87,7 @@ export class World {
         return this.map.length;
     }
 
-    get allOccupiedHexagons(): Hex[] {
+    get hexagons(): Hex[] {
         return this.map.map(hex => {
             return hex.hexagon.hex
         });

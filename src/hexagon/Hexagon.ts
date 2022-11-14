@@ -1,4 +1,3 @@
-import type {Player} from "../player/Player";
 import type {Tickable} from "../game/Tickable";
 import type {Hex} from "../layout/Hex";
 import {Biome} from "../biomes/Biome";

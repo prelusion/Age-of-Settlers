@@ -6,4 +6,8 @@ export class Point {
         this.x = x;
         this.y = y;
     }
+
+    public static Zero() {
+        return new Point(0, 0);
+    }
 }

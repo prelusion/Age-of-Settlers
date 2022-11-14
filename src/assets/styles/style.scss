@@ -1,0 +1,47 @@
+body {
+    background: #111;
+    -webkit-text-size-adjust: auto;
+}
+
+canvas {
+    border: solid 1px red;
+}
+
+.debug-btn:hover {
+    background-color: white;
+    color: black;
+}
+
+.procedure-btn:hover {
+    background-color: white;
+    color: black;
+}
+
+.hide-canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+}
+
+#debug-info-hover {
+    padding: 10px;
+    color: gold;
+    position: absolute;
+    z-index: 12;
+    height: 500px;
+    width: 400px;
+    border: 1px solid darkmagenta;
+    font-size: 2em;
+    border-radius: 15px
+}
+
+.selected-procedure {
+    background-color: gold !important;
+    color: black !important;
+}
+
+.debug-selected {
+    background-color: gold !important;
+    color: black !important;
+}

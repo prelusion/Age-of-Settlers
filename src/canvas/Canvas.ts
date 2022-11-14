@@ -2,27 +2,21 @@ import type {Hex} from "../layout/Hex";
 import {LayoutHelper} from "../layout/LayoutHelper";
 import type {BiomeType} from "../data/types/BiomeType";
 import {ImageFactory} from "../util/ImageFactory";
-import type {Point} from "../layout/Point";
-import {canvas} from "../index";
-import {showInfoHexagon} from "../util/Debug";
+import {Point} from "../layout/Point";
 
 export class Canvas {
-    ctx: CanvasRenderingContext2D;
+    private readonly _ctx: CanvasRenderingContext2D;
 
     constructor(id: string) {
-        this.ctx = getCanvasIfSupported(id);
-        this.ctx.globalCompositeOperation="screen";
-        this.ctx.textAlign = "center"
-        this.ctx.font = "bold 30px";
+        this._ctx = getCanvasIfSupported(id);
+        this._ctx.globalCompositeOperation="screen";
+        this._ctx.textAlign = "center"
+        this._ctx.font = "bold 30px";
         // this.draw();
-
-        this.ctx.canvas.addEventListener('click', function(e) {
-            showInfoHexagon(canvas.ctx.canvas, e)
-        })
     }
 
-    getCtx() {
-        return this.ctx;
+    get ctx() {
+        return this._ctx;
     }
 
     setCanvasConfig(r: number, g: number, b: number) {
@@ -37,7 +31,7 @@ export class Canvas {
     }
 
     draw(x: number, y: number, size: number = 3) {
-    //    Todo draw something on canvas.
+        //    Todo draw something on canvas.
         this.ctx.fillRect(x, y, size, size);
         // this.ctx.fillRect(this.ctx.canvas.width / 2, this.ctx.canvas.height / 2, 50, 50);
     }
@@ -48,11 +42,10 @@ export class Canvas {
 
     public drawHex(hex: Hex, biome: BiomeType, order: number, debug: boolean) {
         this.ctx.beginPath();
-        let corner: Point = {x: 0, y: 0}
+        let corner: Point = Point.Zero();
         let offset = LayoutHelper.hexCornerOffset(0);
         for (corner of LayoutHelper.polygonCorners(hex)) {
             this.ctx.lineTo(corner.x, corner.y);
-            /** Coords on Hexa debugging **/
         }
         if (debug) {
             this.setCanvasConfig(255, 0, 255);
