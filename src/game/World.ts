@@ -1,13 +1,11 @@
 import {Hexagon} from "../hexagon/Hexagon";
 import {Hex} from "../layout/Hex";
-import type {BiomeType} from "../data/types/BiomeType";
 import {BiomeHelper} from "../data/helper/BiomeHelper";
 import {nestedArraySet} from "../util/Array";
 import {Random} from "../util/Random";
-
-export interface HexagonData {
-    hexagon: Hexagon,
-}
+import {Biome} from "../biomes/Biome";
+import {ProceduralGenerator} from "../procedural/ProceduralGenerator";
+import {BiomeType} from "../data/types/BiomeType";
 
 export enum HexState {
     OCCUPIED,
@@ -16,7 +14,7 @@ export enum HexState {
 }
 
 export class World {
-    private map: HexagonData[];
+    private map: Biome[];
 
     /**
      * This set is a Hex object. This is done to simply use the
@@ -32,12 +30,20 @@ export class World {
         this.generateHexagon(initial);
     }
 
-    generateHexagon(hex: Hex, biome: BiomeType = BiomeHelper.getRandomBiomeType()) {
+    generateHexagon(hex: Hex) {
         if (this.isOccupied(hex)) {
             throw Error(`Tried to generate Hexagon on occupied tile. ${hex}`)
         }
+        let biome = new Biome(BiomeHelper.getRandomBiomeType());
+        biome.addTile(hex);
+        this.map.push(biome);
+        this.setHexState(hex, HexState.OCCUPIED);
+        this.setAdjacentHexStates(hex);
 
-        this.map.push({hexagon: new Hexagon(hex, biome)});
+    }
+
+    generateHexagonIntoBiome(hex: Hex, biome: Biome) {
+        biome.addTile(hex);
         this.setHexState(hex, HexState.OCCUPIED);
         this.setAdjacentHexStates(hex);
     }
@@ -72,11 +78,17 @@ export class World {
      * @param hex
      */
     public getHexagonFromHex(hex: Hex): Hexagon | undefined {
-        return this.map.find((h) => {
-            if (h.hexagon.hex.equals(hex)) {
-                return h.hexagon
-            }
-        })?.hexagon;
+        //  todo check if this is correct.
+        let hexagon: Hexagon | undefined = undefined;
+        this.map.map((biome) => {
+            biome.tiles.map(h => {
+                if (h.hex.equals(hex)) {
+                    hexagon = h;
+                    return;
+                }
+            })
+        });
+        return hexagon;
     }
 
     public setHexState(hex: Hex, state: HexState): void {
@@ -84,13 +96,17 @@ export class World {
     }
 
     get hexagonCount() {
-        return this.map.length;
+        let hexCount = 0;
+        this.map.map(b => hexCount += b.tiles.length);
+        return hexCount;
     }
 
     get hexagons(): Hex[] {
-        return this.map.map(hex => {
-            return hex.hexagon.hex
+        let hex: Hex[] = [];
+        this.map.map(biome => {
+            return biome.tiles.map(h => hex.push(h.hex));
         });
+        return hex;
     }
 
     /**
@@ -118,47 +134,119 @@ export class World {
         return hexes;
     }
 
+    generateBiome(worldGenerator: ProceduralGenerator) {
+        let hex = this.getRandomHex(HexState.ADJACENT);
+        if (hex === undefined) {
+            return;
+        }
+
+        let biomeType = worldGenerator.getNewBiomeType(hex, this);
+        let biome = new Biome(biomeType)
+        biome.addTile(hex);
+
+        let availableHexagons = hex.neighbours();
+        let newBiomeSize = Math.floor(Math.random() * (worldGenerator.maxBiomeSize - worldGenerator.minBiomeSize + 1)) + worldGenerator.minBiomeSize
+
+        while (biome.size() < newBiomeSize) {
+            let index = Math.floor(Math.random()*availableHexagons.length);
+            let hex = availableHexagons[index];
+            availableHexagons.splice(index, 1);
+
+            if (hex === undefined) {
+                break;
+            }
+
+            if (this.atBorder(hex, worldGenerator)) {
+                this.setHexState(hex, HexState.OCCUPIED)
+                continue;
+            }
+
+            if (this.isOccupied(hex)) {
+                continue;
+            }
+
+            availableHexagons.push(...hex.neighbours());
+            this.generateHexagonIntoBiome(hex, biome);
+        }
+
+        this.map.push(biome);
+    }
+
+    fillAllAdjacentTiles(biomeType: BiomeType) {
+        let adjacentHex: Hex[] = [];
+        this.map.map(b => {
+            b.tiles.map(h => {
+                h.hex.neighbours().map(h => {
+                    if (this.getHexState(h) === HexState.ADJACENT) {
+                        adjacentHex.push(h)
+                    }
+                });
+            })
+        });
+
+        let ocean = new Biome(biomeType);
+        this.map.push(ocean);
+        adjacentHex.map(h => {
+            this.generateHexagonIntoBiome(h, ocean);
+        });
+
+    }
+
     getRandomHex(state: HexState | null = null): Hex {
         return Random.choice(this.hexStateFlattened(state));
     }
 
     getFirstOccupiedHexagon(): Hexagon {
-        return this.map[0].hexagon;
+        return this.map[0].tiles[0];
     }
 
     // TODO: Make more efficient like saving this number in every hexagon how big
     //  (OR) which other hexagons are in the same biome.
     //  (Could do cool tricks with that if it's efficient code).
-    checkBiomeSizeOfHex(hex: Hex, biome: BiomeType, alreadyCheckBiomes: Hex[] = []): number {
-        let adjacentHexagons = hex.neighbours();
-        let biomeSize = 0;
-        this.map.map((d) => {
-            if (!alreadyCheckBiomes.includes(d.hexagon.hex)) {
-                if (d.hexagon.biome.type !== biome) {
-                    alreadyCheckBiomes.push(d.hexagon.hex);
-                }
-                if (adjacentHexagons.includes(d.hexagon.hex) && d.hexagon.biome.type === biome) {
-                    biomeSize += 1;
-                    alreadyCheckBiomes.push(d.hexagon.hex);
-                    this.checkBiomeSizeOfHex(d.hexagon.hex, biome, alreadyCheckBiomes);
-                }
-            }
-        });
+    // getBiomeSize(hex: Hex, biome: BiomeType, alreadyCheckBiomes: Hex[] = []): number {
+    //     let adjacentHexagons = hex.neighbours();
+    //     let biomeSize = 0;
+    //     this.map.map((d) => {
+    //         if (!alreadyCheckBiomes.includes(d.hexagon.hex)) {
+    //             if (d.hexagon.biome.type !== biome) {
+    //                 alreadyCheckBiomes.push(d.hexagon.hex);
+    //             }
+    //             if (adjacentHexagons.includes(d.hexagon.hex) && d.hexagon.biome.type === biome) {
+    //                 biomeSize += 1;
+    //                 alreadyCheckBiomes.push(d.hexagon.hex);
+    //                 this.checkBiomeSizeOfHex(d.hexagon.hex, biome, alreadyCheckBiomes);
+    //             }
+    //         }
+    //     });
+    //
+    //     return biomeSize;
+    // }
 
-        return biomeSize;
+    getBiomeTypeFromHex(hex: Hex): BiomeType {
+        return this.getBiomeFromHex(hex)?.type ?? BiomeHelper.getRandomBiomeType();
     }
 
-    getBiomeFromHex(hex: Hex): BiomeType {
-        let h = this.map.find((d) => {
-            if (d.hexagon.hex.equals(hex)) {
-                return hex;
-            }
-        });
+    getBiomeFromHex(hex: Hex): Biome | undefined {
+        let biome: Biome | undefined;
+        this.map.map(b => {
+            b.tiles.map(h => {
+                if (h.hex.equals(hex)) {
+                    biome = b;
+                }
+            })
+        })
+        return biome;
+    }
 
-        if (!h) {
-            console.log("Given hex is not yet used in the map");
-            return BiomeHelper.getRandomBiomeType()
+    getBiomeSize(hex: Hex): number {
+        return this.getBiomeFromHex(hex)?.tiles.length ?? 0;
+    }
+
+
+    public atBorder(hex: Hex, p: ProceduralGenerator): boolean {
+        if (Hex.distanceFromZeroW(hex) > p.totalWidth / 2 || Hex.distanceFromZeroH(hex) > p.totalHeight / 2) {
+            return true;
         }
-        return h.hexagon.biome.type;
+        return false;
     }
 }

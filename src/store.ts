@@ -4,6 +4,7 @@ import {World} from "./game/World";
 import {Hexagon} from "./hexagon/Hexagon";
 import {Canvas} from "./canvas/Canvas";
 import {toRaw} from "vue";
+import {dd} from "./util/dd";
 
 export const store = createStore({
     state() {
@@ -48,7 +49,7 @@ export const store = createStore({
             for (let hexagon of context.state.world.hexagons) {
                 context.state.canvas.drawHex(
                     hexagon,
-                    context.state.world.getBiomeFromHex(hexagon),
+                    context.state.world.getBiomeTypeFromHex(hexagon),
                     counter++,
                     context.state.debugModeActive
                 );

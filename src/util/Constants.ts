@@ -1,1 +1,1 @@
-export const HEX_CORNERS = 6;
+ export const HEX_CORNERS = 6;

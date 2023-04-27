@@ -1,4 +1,4 @@
-<script setup lang="ts">
+    <script setup lang="ts">
 import RightSidebar from "./components/RightSidebar.vue";
 import Canvas from "./components/Canvas.vue";</script>
 

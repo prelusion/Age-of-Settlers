@@ -2,6 +2,9 @@ import {HexState, World} from "./World";
 import {Hex} from "../layout/Hex";
 import type {ProceduralType} from "../data/types/ProceduralType";
 import {ProceduralGenerator} from "../procedural/ProceduralGenerator";
+import {dd} from "../util/dd";
+import {Biome} from "../biomes/Biome";
+import {BiomeType} from "../data/types/BiomeType";
 
 export class Game {
     public static generateProceduralWorld(type: ProceduralType): World {
@@ -11,28 +14,13 @@ export class Game {
         let worldGenerator = new ProceduralGenerator(type);
 
         while (world.hexagonCount < worldGenerator.totalSize) {
-            let hex = world.getRandomHex(HexState.ADJACENT);
-            if (hex === undefined) {
-                break;
-            }
-
-            if (Game.isBorder(hex, worldGenerator)) {
-                world.setHexState(hex, HexState.OCCUPIED)
-                continue;
-            }
-
-            let biome = worldGenerator.getBiome(hex, world);
-            world.generateHexagon(hex, biome);
+            world.generateBiome(worldGenerator);
         }
+        world.fillAllAdjacentTiles(BiomeType.WATER);
+        world.fillAllAdjacentTiles(BiomeType.WATER);
+        world.fillAllAdjacentTiles(BiomeType.WATER);
 
         return world;
-    }
-
-    public static isBorder(hex: Hex, p: ProceduralGenerator): boolean {
-        if (Hex.distanceFromZeroW(hex) > p.totalWidth / 2 || Hex.distanceFromZeroH(hex) > p.totalHeight / 2) {
-            return true;
-        }
-        return false;
     }
 
     /**

@@ -23,6 +23,31 @@ export class Obj {
     public static values<T extends Record<any, any>>(r: T): Array<valueOf<T>> {
         return Object.values(r);
     }
+
+
+    /**
+     * Wrapper for Object.keys() that does keep track of record key type
+     *
+     * @param r The record to get the keys from
+     * @private
+     */
+    public static keysOnly<T extends Record<any, any>>(r: T): Array<keyof T> {
+        return Object.keys(r).filter((rs) => {
+            return isNaN(Number(rs));
+        });
+    }
+
+    /**
+     * Wrapper for Object.values() that does keep track of record value type
+     *
+     * @param r The record to get the value from
+     * @private
+     */
+    public static valuesOnly<T extends Record<any, any>>(r: T): Array<valueOf<T>> {
+        return Object.values(r).filter((rs) => {
+            return !isNaN(Number(rs));
+        });
+    }
 }
 
 /**

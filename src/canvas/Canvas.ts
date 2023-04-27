@@ -20,7 +20,7 @@ export class Canvas {
     }
 
     setCanvasConfig(r: number, g: number, b: number) {
-        this.ctx.globalCompositeOperation="color-burn";
+        this.ctx.globalCompositeOperation="color";
         this.ctx.textAlign = "center"
         this.ctx.font = "bold 13px Arial";
         this.ctx.fillStyle = "rgb("+r+","+g+","+b+")";
@@ -42,6 +42,7 @@ export class Canvas {
 
     public drawHex(hex: Hex, biome: BiomeType, order: number, debug: boolean) {
         this.ctx.beginPath();
+        this.ctx.globalCompositeOperation="color";
         let corner: Point = Point.Zero();
         let offset = LayoutHelper.hexCornerOffset(0);
         for (corner of LayoutHelper.polygonCorners(hex)) {
@@ -56,6 +57,7 @@ export class Canvas {
             this.ctx.fillText(order + "", corner.x-offset.x, corner.y+offset.y, 200)
         }
 
+        console.log(biome);
         this.ctx.fillStyle = this.ctx.createPattern(ImageFactory.singleton().getImage(biome), "repeat") as CanvasPattern
         this.ctx.fill();
     }

@@ -4,6 +4,7 @@ import {Random} from "../../util/Random";
 import type {CollectableType} from "../types/ResourceType";
 import type {BiomeType} from "../types/BiomeType";
 import {Obj} from "../../util/TypeHint";
+import {ProceduralTypes} from "../types/BiomeType";
 
 export class BiomeHelper {
     public static shouldCollSpawn(coll: BiomeDataCollectables): boolean {
@@ -28,6 +29,6 @@ export class BiomeHelper {
     }
 
     public static getRandomBiomeType(): BiomeType {
-        return biomes[Random.number(Obj.keys(biomes).length - 1) as BiomeType].type;
+        return biomes[Random.number(Obj.keys(biomes).length - 1) as ProceduralTypes].type;
     }
 }

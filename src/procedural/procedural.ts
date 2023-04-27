@@ -1,5 +1,5 @@
 
-import {ProceduralType} from "./types/ProceduralType";
+import {ProceduralType} from "../data/types/ProceduralType";
 
 export interface ProceduralData {
     name: string;           // Name of the proceduralDataGenerator
@@ -15,27 +15,27 @@ export default {
     [ProceduralType.RANDOM]: {
         name: "Random",
         type: ProceduralType.RANDOM,
-        maxBiomeSize: 1,
+        maxBiomeSize: 2,
         minBiomeSize: 1,
-        totalSize: 80,
+        totalSize: 100,
         totalWidth: 57,
         totalHeight: 38,
     },
     [ProceduralType.SMALL_BIOME]: {
         name: "Small Biome",
         type: ProceduralType.SMALL_BIOME,
-        maxBiomeSize: 9,
-        minBiomeSize: 2,
-        totalSize: 600,
+        maxBiomeSize: 22,
+        minBiomeSize: 10,
+        totalSize: 100,
         totalWidth: 57,
         totalHeight: 38,
     },
     [ProceduralType.BIG_BIOME]: {
         name: "Big Biome",
         type: ProceduralType.BIG_BIOME,
-        maxBiomeSize: 30,
+        maxBiomeSize: 55,
         minBiomeSize: 20,
-        totalSize: 300,
+        totalSize: 600,
         totalWidth: 57,
         totalHeight: 38,
     },

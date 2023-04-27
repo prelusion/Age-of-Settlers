@@ -1,12 +1,13 @@
 import {ProceduralType} from "../data/types/ProceduralType";
-import type {ProceduralData} from "../data/procedural";
-import Procedural from "../data/procedural";
+import type {ProceduralData} from "./procedural";
+import Procedural from "./procedural";
 import {BiomeType} from "../data/types/BiomeType";
 import {BiomeHelper} from "../data/helper/BiomeHelper";
 import type {World} from "../game/World";
 import type {Hex} from "../layout/Hex";
 import {Random} from "../util/Random";
 import {Obj} from "../util/TypeHint";
+import {dd} from "../util/dd";
 
 export class ProceduralGenerator implements ProceduralData {
     name: string;
@@ -27,40 +28,43 @@ export class ProceduralGenerator implements ProceduralData {
         this.totalWidth = Procedural[type].totalWidth;
     }
 
-    public getBiome(hex: Hex, world: World): BiomeType {
+    public getNewBiomeType(hex: Hex, world: World): BiomeType {
         switch (this.type) {
             case ProceduralType.RANDOM:
-                return this.getRandomBiome();
+                return this.getRandomBiomeType();
             case ProceduralType.BIG_BIOME:
             case ProceduralType.SMALL_BIOME:
-                return this.getBetweenSizeBiome(hex, world);
+                return this.getBiomeType(hex, world);
             case ProceduralType.SINGLE_BIOME:
-                return this.getSingleBiome(world);
+                return this.getSingleBiomeType(world);
             default:
-                return this.getRandomBiome();
+                return this.getRandomBiomeType();
         }
     }
 
-    private getRandomBiome(): BiomeType {
+    private getRandomBiomeType(): BiomeType {
         return BiomeHelper.getRandomBiomeType();
     }
 
-    private getBetweenSizeBiome(hex: Hex, world: World): BiomeType {
-        let types = Random.shuffle(Obj.values(BiomeType));
-        let type = BiomeHelper.getRandomBiomeType();
-        for (let t of types) {
-            let biomeSize = world.checkBiomeSizeOfHex(hex, t)
-            if (biomeSize > this.minBiomeSize && biomeSize < this.maxBiomeSize) {
-                type = t;
-                break;
-            }
-        }
+    private getBiomeType(hex: Hex, world: World): BiomeType {
+        // todo blacklist neighbouringBiomes
+        let neighbouringBiomes: BiomeType;
+        // hex.neighbours().map(neighbour => neighbouringBiomes.push(neighbour.biomeType))
 
-        return type;
+        let biomeTypes = Random.shuffle(Obj.valuesOnly(BiomeType));
+        let biomeType = BiomeHelper.getRandomBiomeType();
+        // for (let t of biomeTypes) {
+        //     let biomeSize = world.getBiomeSize(hex)
+        //     if (biomeSize > this.minBiomeSize && biomeSize < this.maxBiomeSize) {
+        //         biomeType = t;
+        //         break;
+        //     }
+        // }
 
+        return biomeType;
     }
 
-    private getSingleBiome(world: World): BiomeType {
-        return world.getFirstOccupiedHexagon().biome.type;
+    private getSingleBiomeType(world: World): BiomeType {
+        return world.getFirstOccupiedHexagon().biomeType;
     }
 }

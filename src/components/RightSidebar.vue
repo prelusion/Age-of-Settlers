@@ -23,9 +23,9 @@ watch(debugModeActive, () => {
 })
 
 const worlds: Record<string, World> = {
-    map_random: Game.generateProceduralWorld(ProceduralType.BIG_BIOME),
-    map_small_biome: Game.generateProceduralWorld(ProceduralType.RANDOM),
-    map_big_biome: Game.generateProceduralWorld(ProceduralType.SMALL_BIOME),
+    map_random: Game.generateProceduralWorld(ProceduralType.RANDOM),
+    map_small_biome: Game.generateProceduralWorld(ProceduralType.SMALL_BIOME),
+    map_big_biome: Game.generateProceduralWorld(ProceduralType.BIG_BIOME),
     map_single_biome: Game.generateProceduralWorld(ProceduralType.SINGLE_BIOME),
 };
 
